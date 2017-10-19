@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+<style>
+{% block style %}
+/*.jumbotron {
+	background-color:#155A1E;
+	color:#FFF;
+
+}*/
+
+
+.buttonspace1 {
+  width:120px;
+
+}
+
+
+{% endblock %}
+</style>
+
+
+{% block special %}
+
+
+
+<div class="panel panel-default">
+<div class="panel-heading"><h4 class="panel-title"><b>Your Dashboard </b></h4></div>
+<div class="panel-body">
+
+
+
+
+
+<!--         <a href='{{ request.user.puser.get_absolute_url }}' data-action='show-spinner' class='btn btn-primary buttonspace' > Personal Details </a> -->
+
+
+  <h4><span class="label label-default">Your Personel Details</span></h4>
+
+<div class="panel">
+
+  <div class="col-xs-12 col-sm-6">
+    <div class="panel-body">
+
+      <br>
+      <p>
+        <b>User name:</b> {{ user.user }}
+      </p>
+
+      <p>
+        <b>Name:</b>
+        {% if user.name %}
+          {{ user.name }}
+        {% else %}
+
+        {% endif %}
+      </p>
+
+      <p>
+        <b>About Me:</b> 
+        {% if user.description %}
+          {{ user.description }}
+        {% else %}
+
+        {% endif %}
+      </p>
+
+      <br>
+
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+    <div class="panel-body">
+
+      <br>
+      {% if user.image %}
+        <img src="{{ user.image.url }}" width="200px">
+      {% else %}
+
+      {% endif %}
+
+    </div>
+  </div>
+
+</div>
+
+<div class="row"></div>
+
+<a href='{{ user.get_update }}' class='btn btn-success buttonspace' data-action='show-spinner'>Edit</a>
+
+<hr>
+
+
+<h4><span class="label label-default">Your Personal Records</span></h4>
+
+  <div class="col-xs-12 col-sm-6">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span class="badge"> {{points}} </span>Points:
+    </li>
+    <li class="list-group-item">
+      <span class="badge"> {{rank}} </span>Rank:
+    </li>
+  </ul>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span class="badge"> {{pollsCreated}} </span>Polls created:
+    </li>
+    <li class="list-group-item">
+      <span class="badge"> {{pollsECreated}} </span>Polls entries created:
+    </li>
+  </ul>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span class="badge"> {{ votes_polls }} </span>Positive votes - for polls created:
+    </li>
+    <li class="list-group-item">
+      <span class="badge"> {{ votes_poll_entries }} </span>Positive votes - for poll entries created:
+    </li>
+  </ul>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span class="badge"> {{ votes_polls_views }} </span>Views - for polls created:
+    </li>
+    <li class="list-group-item">
+      <span class="badge"> {{ votes_poll_entries_views }} </span>Views - for poll entries recieved:
+    </li>
+  </ul>
+  </div>
+
+<hr>
+
+<div class="row"></div>
+
+
+    <h4><span class="label label-default">Your Favorite Poll Entries</span></h4>
+    <div class="panel panel-default">
+    <div class="panel-body">
+
+    <ul class="nav nav-pills">
+
+        {% if poll_types %}
+
+        {% for poll_type in poll_types %}
+
+          <li role="presentation"><a href='/polls_favorite/?favorite={{ poll_type.id }}'>{{ poll_type.title }}</a></li>
+        {% endfor %}
+
+        {% else %}
+
+          <p>You do not have any favorite entries yet</p>   
+
+        {% endif %}
+      <br>
+    </ul>
+
+    </div>
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

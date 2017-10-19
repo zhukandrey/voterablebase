@@ -1,0 +1,791 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="google-site-verification" content="wgDqrd9St3JQSG3Hkt35m3vccyIPYRLgxjyxdeZZ7ME" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="../../favicon.ico">
+ -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
+<!--     <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-106024449-1', 'auto');
+      ga('send', 'pageview');
+
+    </script> -->
+
+
+    {% block meta %}
+
+    {% endblock %}
+
+
+    <title>{% block head_title %}Voterable{% endblock %}</title>
+
+{% include 'head_css.html' %}
+
+      <style>
+      {% block style %}
+
+      {% endblock %}
+
+
+        .jumbotron {
+            background: url('{% static 'img/banner.png' %}');
+            background-position: 0% 25%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: 10;
+
+        }
+
+        .jumbotron1 {
+            background: url('{% static 'img/jumbo1.png' %}');
+            background-position: 0% 25%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: 10;
+            max-width: 100%;
+            min-width: 100px;
+            width: 1200px;
+            height: auto;
+
+        }
+
+        .jumbotron2 {
+            background: url('{% static 'img/jumbo2.png' %}');
+            background-position: 0% 25%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-top: 10;
+            max-width: 100%;
+            min-width: 100px;
+            width: 1200px;
+            height: auto;
+
+        }
+
+
+
+        #foot {
+            background-color: lightgray;
+            padding-bottom: 8px;
+
+        }
+
+        .btn-manual {
+            background-color: #808080;
+            color: white;
+        }
+
+        /*      .test {
+                color: white;
+                padding:20px 20px 20px 20px;
+              }*/
+
+        .fpfont {
+            font-family:"Helvetica";
+/*            font-family:" Arial";*/
+/*            font-size: 1.1em;*/
+/*            font-weight: bold;*/
+        }
+
+/*
+Change the panel color below*/
+
+        .panel > .panel-heading {
+            background-color: #008080;
+            color: white;
+        }
+
+        .fa-lg {
+            color: #336B87;
+        }
+
+        .feature-heading {
+            color: #336B87;
+        }
+
+
+        mark {
+            background: #FFFFFF;
+            opacity: 0.9;
+            position: absolute;
+            padding: 0rem;
+            color: #FFD700;
+        }
+
+        .highlight {
+            background: #FFFFFF;
+            opacity: 0.9;
+            color: #FFD700;
+        }
+
+
+        #noti {
+            padding: 1px 10px 1px 10px;
+            font-size: 12px;
+        }
+
+        .dropdown-menu {
+            width: 200px !important;
+            /*          height: 400px !important;*/
+        }
+
+        .buttonspace {
+            margin: 10px 10px 10px 10px;
+            width: 180px;
+            text-align: center;
+
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .spinner-position {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top-color: #ff6a00;
+            border-radius: 100%;
+            margin: auto;
+            animation: spin 2s linear infinite;
+        }
+
+        .spinner-text {
+            margin-top: 15px;
+        }
+
+        @keyframes spin {
+
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #overlay {
+            height: 100%;
+            width: 100%;
+            background: rgba(255, 255, 255, .95);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 2000;
+        }
+
+        .image { 
+           position: relative; 
+           width: 100%; /* for IE 6 */
+           text-align: center;
+        }
+
+/*        h1 { 
+           position: absolute; 
+           top: 100px; 
+           left: 0; 
+           width: 100%;
+           color: #FFD700;
+           font-family: Helvetica;
+        }
+*/
+
+        .spfont { 
+           position: absolute; 
+           top: 50px; 
+           left: 0; 
+           width: 100%;
+           color: #FFD700;
+/*           font-size: large;*/
+/*           font-family: Impact;*/
+           font-family: Helvetica;
+        }
+
+
+/*        h2 span.spacer {
+            padding:0 5px;
+        }*/
+
+
+      </style>
+
+  </head>
+
+  <body>
+
+
+
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+{% include 'navbar.html' %}
+
+    <div id="overlay">
+      <div class="spinner-position">
+        <div class="spinner"></div>
+        <div class="spinner-text">Page Loading</div>
+      </div>
+    </div>
+
+
+
+<div class='container'>
+
+  {% for message in messages %}
+  <br>
+    <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+
+
+
+  {% block content %}
+
+  <br>
+
+    {% if not request.user.is_authenticated %}
+        <div id="features">
+        <!-- Example row of columns -->
+
+
+
+
+<!--         <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <br>
+                        <h1 style="font-size: 5vmax"><span class="highlight">Welcome!</span></h1>
+
+                        <h3 style="font-size: 2.5vmax"><mark>Digital Marketplace for Freelance Tutors and Students.</mark>
+                        </h3>
+                        <br><br><br><br>
+                        <a class="btn btn-success" href={% url 'account_signup' %} role="button">Sign Up Here</a>
+                        <br><br><br>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+
+<!--   <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+
+    <div class="carousel-inner">
+      <div class="item active">
+          <div class="jumbotron1">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <br><br><br>
+                          <h3 style="font-size: 2.5vmax"><mark>CAST YOUR</mark>
+                          </h3>
+                          <br><br>
+                          <h1 style="font-size: 5vmax"><span class="highlight">VOTE</span></h1>
+                          <h3 style="font-size: 2.5vmax"><mark>CHANGE THE FUTURE</mark>
+                          </h3>
+                          <br><br><br>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="item">
+          <div class="jumbotron2">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <br><br><br>
+                          <h3 style="font-size: 2.5vmax"><mark>CREATE A</mark>
+                          </h3>
+                          <br><br>
+                          <h1 style="font-size: 5vmax"><span class="highlight">POLL</span></h1>
+                          <h3 style="font-size: 2.5vmax"><mark>VOTE FOR THE BEST</mark>
+                          </h3>
+                          <br><br><br>
+                      </div>
+                  </div>
+              </div>
+          </div>      
+      </div>
+    </div>
+
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div> -->
+
+<!--       <img src="{% static 'img/Politics.png' %}" alt="" />
+      <div class="spfont"><h1>Politics</h1></div> -->
+
+
+<div class="container">
+
+<div class="row"></div>
+
+  <div class="image">
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Food.png' %}" alt="...">
+        <a href="/poll_topics/?poll=Food"><div class="spfont"><h1>Food</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Entertainment.png' %}" alt="...">
+        <a href="/poll_topics/?poll=Entertainment"><div class="spfont"><h1>Entertainment</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Automobiles.png' %}" alt="...">
+        <a href="/poll_topics/?poll=TopicC"><div class="spfont"><h1>Automobiles</h1></div></a>
+      </div>
+    </div>
+
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Business.png' %}" alt="...">
+        <a href="/poll_topics/?poll=Business"><div class="spfont"><h1>Business</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Electronics.png' %}" alt="...">
+        <a href="/poll_topics/?poll=TopicE"><div class="spfont"><h1>Electronics</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Politics.png' %}" alt="...">
+        <a href="/poll_topics/?poll=TopicF"><div class="spfont"><h1>Politics</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Self Help.png' %}" alt="...">
+        <a href="/poll_topics/?poll=TopicF"><div class="spfont"><h1>Self Help</h1></div></a>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img src="{% static 'img/Sports.png' %}" alt="...">
+        <a href="/poll_topics/?poll=TopicF"><div class="spfont"><h1>Sports</h1></div></a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="row"></div>
+<!-- <div class="container">
+<p>Signing in allows you vote,  to favorite your lists. Allows to to contribute to our polls and new polls list.</p>
+</div> -->
+
+
+
+
+
+
+
+<!--       <nav class="navbar navbar-default test"> -->
+<br><br>
+
+
+        <!--       <nav class="navbar navbar-default test"> -->
+        <footer id="foot">
+            <br><br>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <p><b> About </b></p>
+                        <p><a href=''>Our Mission</a></p>
+                        <p><a href=''>Press</a></p>
+                        <p><a href=''>Partnerships</a></p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><b> Support </b></p>
+                        <p><a href=''>FAQ</a></p>
+                        <p><a href=''>Contact Us</a></p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><b> Legal </b></p>
+                        <p><a href=''>Terms and Conditions</a></p>
+                        <p><a href=''>Privacy Policy</a></p>
+                        <p><a href=''>Disclaimer</a></p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <p><b> Community </b></p>
+                        <p class="text-muted">Blog</p>
+                        <p class="text-muted">Forum</p>
+                        <p class="text-muted">Affiliates</p>
+                    </div>
+
+                </div>
+
+                <br>
+            </div>
+
+            <p align="center">&copy; Powered by Balance Tech Private Limited. UEN 201621074k</p>
+
+        </footer>
+
+
+
+<!--   </nav> -->
+
+  </div>
+
+
+
+
+
+        {% else %}
+
+          <div class="container">
+          <small>
+          <div class='col-xs-10 col-sm-offset-1'>
+            <h3>Welcome {{ request.user }}</h3>
+            <b>You are logged in</b>
+
+              <br>
+              <br>
+
+
+              {% if not request.user.puser and not request.get_full_path == "/puser/add/" and not request.get_full_path == "/termsandconditions/" and not request.get_full_path == "/privacypolicy/" and not request.get_full_path == "/disclaimer/" %}
+              
+              <br>
+
+              <div class="panel panel-default">
+                <div class="panel-heading"><b>Creating your profile</b></div>
+
+
+                <div class="panel-body">
+                  <a href='{% url "PUserCreate" %}' data-action='show-spinner' class='buttonspace btn btn-success btn-block' >Create your profile</a>
+                </div>
+
+
+              </div>
+
+              {% else %}
+
+
+              {% block special %}
+
+
+
+
+
+
+              {% endblock %}
+
+
+              {% endif %}
+
+
+          </div>
+          </small>
+          </div>
+
+
+    {% endif %}
+
+
+
+
+  {% endblock %}
+
+
+
+
+
+
+
+   {% include "javascript.html" %}
+
+
+
+
+
+
+
+
+<script>
+
+$(document).ready(function(){
+
+  {% block jquery %}
+  {% endblock %}
+
+  updateMsgCount()
+
+//msg dropdown
+  $('.dropdown-toggle').dropdown()
+  $(".notification-toggle").click(function(e){
+
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+
+      success: function(data){
+        $("#notification_dropdown").html(' <li role="presentation" class="dropdown-header"></li>');
+        var count = data.count
+        console.log(count)
+        if (count == 0) {
+          var url = ''
+          $("#notification_dropdown").append("<li><a href='" + url + "'>View All Notifications</a></li>")
+        } else {
+          $(data.notifications).each(function(){
+
+            var link = this;
+
+            $("#notification_dropdown").append("<p id='noti'>" + link + " </p>")
+          })
+        }
+      },
+
+      error: function(rs, e){
+        console.log(rs);
+        console.log(e);
+      }
+    })
+  })
+
+//spinner
+  var overlay = document.getElementById("overlay");
+  window.addEventListener('load', function() {
+    overlay.style.display = 'none';
+  });
+
+  $('body').on('click', 'a[data-action=show-spinner]', function(){
+    $('#overlay').fadeIn(200);
+  });
+
+
+    $(".db-submit").click(function(e){
+    var $submitBtn = $(this);
+    e.preventDefault()
+
+    var msg = $(this).attr("msg");
+    
+    $("#dc").fadeIn("300")
+    $("#dc").dialog({
+      resizable: false,
+      height: 200,
+      width: 350,
+      modal: true,
+      show: { effect: 'fade' }, 
+      hide: { effect: 'fade' },
+      buttons:{
+        1:{       
+          id:"close",
+          text:"Confirm",
+          click: function(){
+            console.log("confirm") 
+
+              var $form = $submitBtn.parent('.db');
+
+              if ($form && $form.length) {
+                $form.submit();
+              }
+
+            $(this).dialog("close")
+          },
+          class: "buy-btn"
+        },
+        2:{       
+          id:"close",
+          text:"Cancel",
+          click: function(){
+            console.log("cancel")
+            $(this).dialog("close")
+          },
+          class: "cancel-btn"
+        }
+      }
+    })
+    })
+
+})
+
+
+//functions
+
+function updateMsgCount(){
+  var badge = $("#msg-count-badge");
+    $.ajax({
+      type: "GET",
+      url: "",
+      success: function(data){
+        badge.text(data.count);
+      },
+      error: function(response, error){
+        console.log(response);
+        console.log(error);
+      }
+    })
+}
+
+function runScrollB() {
+  scrollTo(document.body, 100000, 100);
+}
+var scrollbottom;
+scrollbottom = document.querySelector("#scrollbottom");
+if(scrollbottom){
+  scrollbottom.addEventListener("click",runScrollB,false)
+}
+function runScrollT() {
+  scrollTo(document.body, 0, 100);
+}
+var scrolltop;
+scrolltop = document.querySelector("#scrolltop");
+if(scrolltop){
+  scrolltop.addEventListener("click",runScrollT,false)
+}
+
+function scrollTo(element, to, duration) {
+  if (duration <= 0) return;
+  var difference = to - element.scrollTop;
+  var perTick = difference / duration * 10;
+
+  setTimeout(function() {
+    element.scrollTop = element.scrollTop + perTick;
+    if (element.scrollTop == to) return;
+    scrollTo(element, to, duration - 10);
+  }, 10);
+}
+
+
+function showFlashMessage(message) {
+  var template = "<div class='container container-alert-flash'>" + 
+  "<div class='col-sm-10 col-sm-offset-1'> " + 
+  "<div class='alert alert-success alert-dismissible' role='alert'>" + 
+  "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+  "<span aria-hidden='true'>&times;</span></button>" 
+  + message + "</div></div></div>"
+  $("body").append(template);
+  $(".container-alert-flash").fadeIn(500);
+  setTimeout(function(){ 
+    $(".container-alert-flash").fadeOut(500);
+  }, 5000);
+}
+
+
+
+ </script>
+
+
+
+<!-- The modal section has to be at the very bottom of the site, right before closing body tag -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <div class="embed-responsive embed-responsive-ratio">
+              <video controls id="modalVideo">
+                <source src="{% static 'vid/tutorial.mp4' %}" type="video/mp4">
+                <source src="{% static 'vid/tutorial.mov' %}" type="video/mov">
+              </video>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-primary" data-dismiss="modal" id="modalClose">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </body>
+</html>
+
+
+
+
+
+
+
