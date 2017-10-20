@@ -93,25 +93,9 @@ class HomeView(TemplateView):
     title = 'Your Dashboard'
     # form_class = SearchForm
 
-    # def dispatch(self, *args, **kwargs):
-    #     dispatch = super(HomeView, self).dispatch(*args, **kwargs)
-    #     #exit if no poll_id
-    #     try: 
-    #         print PUser.objects.get(user_id=self.request.user.id)
-    #     except:
-    #         return redirect('PUserCreate')
-
-    #     return dispatch
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-
-        #redirecting users if user hasnt signed in
-        if self.request.user.is_authenticated():
-            try: 
-                test = PUser.objects.get(user_id=self.request.user.id)
-            except:
-                return redirect('PUserCreate')
 
         return self.render_to_response(context)
 
@@ -121,66 +105,6 @@ class HomeView(TemplateView):
 
         context = super(HomeView, self).get_context_data(*args, **kwargs)
 
-        # context["form"] = SearchForm()
-
-        if self.request.user.is_authenticated():
-            fav_polls = PollFav.objects.filter(fav_user=self.request.user)
-
-            #retrieving favourites of user
-            pfav = PollFav.objects.filter(fav_user=self.request.user)
-
-            #retrieving pollitems list
-            pitem_lst = pfav.values_list('poll',flat=True)
-            pitem_obj = PollItem.objects.filter(id__in=pitem_lst)
-
-            #retrieving polltypes list
-            ptype_lst = pitem_obj.values_list('polltype',flat=True).distinct()
-            ptype_obj = Ptype.objects.filter(id__in=ptype_lst)
-
-            context["submit_btn_value"] = "Send"
-            context["title"] = self.title
-            context["poll_types"] = ptype_obj
-            todate = datetime.datetime.now().date()
-            
-            user = self.request.user
-
-            context["pollsCreated"] = Ptype.objects.filter(c_user=user).count()
-            context["pollsECreated"] = PollItem.objects.filter(user_submit=user).count()
-
-            user_ptypes = Ptype.objects.filter(c_user=user)
-
-            context["votes_polls"] = PollVote.objects.filter(posi=True, poll__polltype__in=user_ptypes).count()
-            context["votes_poll_entries"] = PollVote.objects.filter(posi=True, poll__user_submit=user,
-                                                                    poll__polltype__in=user_ptypes).count()
-
-
-            # get user created ptypes
-            created_polls = Ptype.objects.filter(c_user=user)
-            # get list of views that belong to the pytypes created by user
-            ptype_list = ViewPollTypeUnique.objects.filter(p_type__in=created_polls)
-            # get user created polls
-            context["votes_polls_views"] = ptype_list.values_list('userview',flat=True).distinct().count()
-
-
-            # get user created pitems
-            created_items = PollItem.objects.filter(user_submit=user)
-            # get list of views that belong to the pytypes created by user
-            pitem_list = ViewPollItemsUnique.objects.filter(p_item__in=created_items)
-            # get user created polls
-            context["votes_poll_entries_views"] = pitem_list.values_list('userview',flat=True).distinct().count()
-
-            context["points"] = context["votes_polls_views"] + context["votes_poll_entries_views"]
-
-            pt = context["points"]
-
-            context["rank"] = Ranking.objects.get(low_score__lte=pt, high_score__gte=pt)
-
-            try:
-                context["user"] = PUser.objects.get(user_id=self.request.user.id)
-            except:
-                return redirect(reverse("PUserCreate"))
-
-            return context
 
         return context
 
